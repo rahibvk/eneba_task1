@@ -13,17 +13,17 @@ console.log(`[Server] Starting in ${isProd ? 'PRODUCTION' : 'DEVELOPMENT'} mode`
 // CORS Configuration
 const corsOptions = {
     origin: (origin, callback) => {
-        if (!isProd) {
-            // In dev, always allow the Vite dev server
-            callback(null, "http://localhost:5173");
+        if (!isProd || !origin) {
+            // Allow same-origin, dev, or requests without Origin header
+            callback(null, true);
         } else {
-            // In prod, check against CORS_ORIGIN env var (comma-separated)
             const allowedOrigins = (process.env.CORS_ORIGIN || "").split(",").map(o => o.trim());
-            // origin is undefined for back-end to back-end requests
-            // also allow same-origin frontend to access its own assets
-            if (!origin || allowedOrigins.includes(origin) || origin.includes("localhost:4000")) {
-                callback(null, origin);
+            const isRenderOrigin = origin.includes("onrender.com");
+
+            if (allowedOrigins.includes(origin) || isRenderOrigin) {
+                callback(null, true);
             } else {
+                console.warn(`[CORS] Blocked origin: ${origin}`);
                 callback(new Error("Not allowed by CORS"));
             }
         }
