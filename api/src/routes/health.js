@@ -5,7 +5,11 @@ const router = express.Router();
 
 router.get("/", (_req, res, next) => {
     try {
-        const health = { ok: true };
+        const health = {
+            ok: true,
+            nodeEnv: process.env.NODE_ENV,
+            isProd: process.env.NODE_ENV === "production"
+        };
         try {
             db.prepare("SELECT 1").get();
             health.db = "up";
