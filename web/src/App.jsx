@@ -7,6 +7,7 @@ import EnebaLogo from './components/EnebaLogo'
 import './App.css'
 
 export default function App() {
+  console.log('App Component Loading...');
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebouncedValue(search, 300)
 
@@ -41,6 +42,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    console.log('App: Mounted and loading offers');
     const controller = new AbortController()
     loadOffers(debouncedSearch, controller.signal)
     return () => controller.abort()
