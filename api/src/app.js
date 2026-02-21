@@ -8,6 +8,8 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 const isProd = process.env.NODE_ENV === "production";
 
+console.log(`[Server] Starting in ${isProd ? 'PRODUCTION' : 'DEVELOPMENT'} mode`);
+
 // CORS Configuration
 const corsOptions = {
     origin: (origin, callback) => {
@@ -41,13 +43,24 @@ app.use("/list", listRouter);
 
 // Static frontend hosting (production)
 if (isProd) {
-    const distPath = path.join(__dirname, "../../web/dist");
+    const distPath = path.resolve(__dirname, "../../web/dist");
+    console.log(`[Server] Static files distPath: ${distPath}`);
+
     app.use(express.static(distPath));
 
     // SPA fallback: any non-/api route returns index.html
     app.use((req, res, next) => {
         if (req.method === 'GET' && !req.path.startsWith('/api')) {
-            return res.sendFile(path.join(distPath, "index.html"));
+            const indexPath = path.join(distPath, "index.html");
+            console.log(`[Server] Fallback triggered for ${req.path}, sending ${indexPath}`);
+            return res.sendFile(indexPath, (err) => {
+                if (err) {
+                    console.error(`[Server] Failed to send index.html: ${err.message}`);
+                    if (!res.headersSent) {
+                        res.status(500).send("Could not serve index.html");
+                    }
+                }
+            });
         }
         next();
     });

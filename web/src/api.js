@@ -1,6 +1,7 @@
 // In production, VITE_API_BASE_URL may be legally omitted/empty to trigger relative paths (e.g., "/api/list").
 // We use ?? to allow empty strings instead of reverting to the fallback.
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+console.log('Using API_BASE_URL:', API_BASE_URL);
 
 /**
  * Fetch offers from the API.
