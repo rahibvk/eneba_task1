@@ -1,0 +1,21 @@
+{
+  "name": "eneba-game",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Eneba game offers monorepo – API + Web",
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm --prefix api run dev",
+    "dev:web": "npm --prefix web run dev",
+    "test": "npm --prefix api run test & npm --prefix web run test",
+    "lint": "npm --prefix api run lint & npm --prefix web run lint",
+    "build": "npm --prefix web run build",
+    "start": "cd api && set NODE_ENV=production&& node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

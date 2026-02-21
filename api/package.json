@@ -1,0 +1,30 @@
+{
+    "name": "eneba-api",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Eneba API server",
+    "main": "src/index.js",
+    "scripts": {
+        "dev": "nodemon src/index.js",
+        "start": "node src/index.js",
+        "test": "vitest run",
+        "lint": "eslint src/",
+        "seed": "node src/seed.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "better-sqlite3": "^12.6.2",
+        "cors": "^2.8.6",
+        "dotenv": "^17.3.1",
+        "express": "^5.2.1"
+    },
+    "devDependencies": {
+        "eslint": "^10.0.1",
+        "globals": "^17.3.0",
+        "nodemon": "^3.1.13",
+        "supertest": "^7.2.2",
+        "vitest": "^4.0.18"
+    }
+}

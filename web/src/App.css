@@ -1,0 +1,13 @@
+/* App-level styles — Tailwind handles the rest */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Utility: line-clamp (Tailwind v4 doesn't need plugin for this, but just in case) */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
