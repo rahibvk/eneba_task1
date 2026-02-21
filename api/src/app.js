@@ -9,8 +9,6 @@ const app = express();
 // Force production mode if on Render, or if NODE_ENV is "production"
 const isProd = process.env.NODE_ENV === "production" || !!process.env.RENDER;
 
-console.log(`[Server] Starting in ${isProd ? 'PRODUCTION' : 'DEVELOPMENT'} mode`);
-
 // CORS Configuration
 const corsOptions = {
     origin: (origin, callback) => {

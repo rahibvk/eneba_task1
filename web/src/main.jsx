@@ -27,24 +27,14 @@ class ErrorBoundary extends Component {
   }
 }
 
-console.log('main.jsx: Initializing React App');
 const rootElement = document.getElementById('root');
 
-if (!rootElement) {
-  console.error('CRITICAL: Root element not found!');
-  document.body.innerHTML = '<h1 style="color:red">Root element not found!</h1>';
-} else {
-  try {
-    createRoot(rootElement).render(
-      <StrictMode>
-        <ErrorBoundary>
-          <App />
-        </ErrorBoundary>
-      </StrictMode>,
-    );
-    console.log('main.jsx: Render called');
-  } catch (err) {
-    console.error('CRITICAL: Render failed immediately', err);
-    rootElement.innerHTML = `<h1 style="color:red">Render Failure: ${err.message}</h1>`;
-  }
+if (rootElement) {
+  createRoot(rootElement).render(
+    <StrictMode>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </StrictMode>,
+  );
 }
