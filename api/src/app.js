@@ -40,15 +40,9 @@ app.use("/api/list", listRouter);
 app.use("/health", healthRouter);
 app.use("/list", listRouter);
 
-// Root diagnostic route (temporary)
-app.get("/diag", (req, res) => {
-    res.send(`Server info: NODE_ENV="${process.env.NODE_ENV}", RENDER="${process.env.RENDER}", isProd=${isProd}`);
-});
-
 // Static frontend hosting (production)
 if (isProd) {
     const distPath = path.resolve(__dirname, "../../web/dist");
-    console.log(`[Server] Static files distPath: ${distPath}`);
 
     app.use(express.static(distPath));
 
@@ -56,13 +50,9 @@ if (isProd) {
     app.use((req, res, next) => {
         if (req.method === 'GET' && !req.path.startsWith('/api')) {
             const indexPath = path.join(distPath, "index.html");
-            console.log(`[Server] Fallback triggered for ${req.path}, sending ${indexPath}`);
             return res.sendFile(indexPath, (err) => {
-                if (err) {
-                    console.error(`[Server] Failed to send index.html: ${err.message}`);
-                    if (!res.headersSent) {
-                        res.status(500).send("Could not serve index.html");
-                    }
+                if (err && !res.headersSent) {
+                    res.status(500).send("Could not serve index.html");
                 }
             });
         }
