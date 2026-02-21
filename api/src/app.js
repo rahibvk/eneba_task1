@@ -41,6 +41,11 @@ app.use("/api/list", listRouter);
 app.use("/health", healthRouter);
 app.use("/list", listRouter);
 
+// Root diagnostic route
+app.get("/", (req, res) => {
+    res.send(`Server is running! NODE_ENV: ${process.env.NODE_ENV}, isProd: ${process.env.NODE_ENV === "production"}`);
+});
+
 // Static frontend hosting (production)
 if (isProd) {
     const distPath = path.resolve(__dirname, "../../web/dist");
