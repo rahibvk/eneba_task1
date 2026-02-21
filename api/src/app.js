@@ -6,7 +6,8 @@ const listRouter = require("./routes/list");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
-const isProd = process.env.NODE_ENV === "production";
+// Force production mode if on Render, or if NODE_ENV is "production"
+const isProd = process.env.NODE_ENV === "production" || !!process.env.RENDER;
 
 console.log(`[Server] Starting in ${isProd ? 'PRODUCTION' : 'DEVELOPMENT'} mode`);
 
@@ -41,9 +42,9 @@ app.use("/api/list", listRouter);
 app.use("/health", healthRouter);
 app.use("/list", listRouter);
 
-// Root diagnostic route
-app.get("/", (req, res) => {
-    res.send(`Server is running! NODE_ENV: ${process.env.NODE_ENV}, isProd: ${process.env.NODE_ENV === "production"}`);
+// Root diagnostic route (temporary)
+app.get("/diag", (req, res) => {
+    res.send(`Server info: NODE_ENV="${process.env.NODE_ENV}", RENDER="${process.env.RENDER}", isProd=${isProd}`);
 });
 
 // Static frontend hosting (production)
