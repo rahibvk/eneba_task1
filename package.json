@@ -9,8 +9,8 @@
     "dev:web": "npm --prefix web run dev",
     "test": "npm --prefix api run test & npm --prefix web run test",
     "lint": "npm --prefix api run lint & npm --prefix web run lint",
-    "build": "npm --prefix web run build",
-    "start": "cd api && set NODE_ENV=production&& node src/index.js"
+    "build": "npm install --prefix api && npm install --prefix web && npm --prefix web run build",
+    "start": "node api/src/index.js"
   },
   "keywords": [],
   "author": "",
